@@ -1,16 +1,74 @@
-# animated_icon
+# Flutter Animation Demo App
 
-A new Flutter project.
+This Flutter app demonstrates a simple play/pause animated icon that changes its state when tapped. The animation is controlled using an `AnimationController`, providing a smooth transition between the play and pause states.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Play/pause animated icon
+- Tap the icon to toggle between states
+- Smooth animation using `AnimationController`
 
-A few resources to get you started if this is your first Flutter project:
+## Preview
+<img src="https://github.com/user-attachments/assets/8d165d95-2b82-4eb0-8b71-679f60de0a94" alt="First Screenshot" style="width: 200px; height: auto; margin-right: 10px;">
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Code Snippet
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Here is the code for the `HomePage` widget:
+
+```dart
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  // Create the animation controller
+  late AnimationController _animatedController;
+
+  // Initialize the animation controller
+  @override
+  void initState() {
+    super.initState();
+    _animatedController = AnimationController(
+        vsync: this,
+        duration: const Duration(seconds: 1)
+    );
+  }
+
+  // Method for when user taps icon
+  bool iconPlaying = false;
+  void _iconTapped() {
+    if (iconPlaying == false) {
+      _animatedController.forward();
+      iconPlaying = true;
+    } else {
+      _animatedController.reverse();
+      iconPlaying = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: GestureDetector(
+            onTap: _iconTapped,
+            child: AnimatedIcon(
+              icon: AnimatedIcons.play_pause,
+              progress: _animatedController,
+              size: 120,
+            ),
+          )
+      ),
+    );
+  }
+}
+```
+
+## Contact
+
+For questions or feedback, please contact [@Bhavyansh03-tech](https://github.com/Bhavyansh03-tech) on GitHub or connect with me on [LinkedIn](https://www.linkedin.com/in/bhavyansh03/).
+
+---
